@@ -4,12 +4,13 @@ const User = require('../../models/user');
 
 module.exports = {
   create,
-  login
+  login,
+  googleOAuth,
 };
 
 async function create(req, res) {
   try {
-    // Add the user to the db
+    // Add the user to the dbc
     const user = await User.create(req.body);
     // token will be a string
     const token = createJWT(user);
@@ -34,6 +35,27 @@ async function login(req, res) {
     res.status(400).json('Bad Credentials');
   }
 }
+
+// New function to handle Google OAuth
+async function googleOAuth(req, res) {
+  try {
+    let user = await User.findOne({ googleId: req.user.googleId });
+    if (!user) {
+      user = await User.create({
+        name: req.user.name,
+        email: req.user.email,
+        googleId: req.user.googleId,
+        avatar: req.user.avatar
+      });
+    }
+    res.json(createJWT(user));
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
+
+
+
 
 
 /* Helper Functions */

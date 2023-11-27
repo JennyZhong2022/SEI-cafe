@@ -5,18 +5,20 @@ const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 6;
 
 const userSchema = new Schema({
-  name: {type: String, required: true},
+  name: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     unique: true,
     trim: true,
-    lowercase: true,
-    required: true
+    lowercase: true
   },
-  password: {
-    type: String,
-    required: true
-  }
+  // add googleID here
+  password: String,
+  googleId: String,
+  avatar: String
 }, {
   timestamps: true,
   toJSON: {
@@ -29,7 +31,7 @@ const userSchema = new Schema({
 
 userSchema.pre('save', async function(next) {
   // 'this' is the user document
-  if (!this.isModified('password')) return next();
+  if (!this.password || !this.isModified('password')) return next();
   // Replace the password with the computed hash
   this.password = await bcrypt.hash(this.password, SALT_ROUNDS);
   return next();

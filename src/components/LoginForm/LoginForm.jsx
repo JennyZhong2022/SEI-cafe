@@ -37,6 +37,10 @@ export default function LoginForm({ setUser }) {
           <input type="password" name="password" value={credentials.password} onChange={handleChange} required />
           <button type="submit">LOG IN</button>
         </form>
+        <br />
+          <hr />
+          <h3>or</h3>
+          <a href="/auth/google" className="login">LOG IN&nbsp;<img src="https://i.imgur.com/FHjYyi0.png" alt='google'/></a>
       </div>
       <p className="error-message">&nbsp;{error}</p>
     </div>

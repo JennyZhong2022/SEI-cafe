@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import './SignUpForm.css'
 import { signUp } from '../../utilities/users-service';
 
 export default class SignUpForm extends Component {
@@ -50,6 +51,11 @@ export default class SignUpForm extends Component {
             <input type="password" name="confirm" value={this.state.confirm} onChange={this.handleChange} required />
             <button type="submit" disabled={disable}>SIGN UP</button>
           </form>
+
+          <br />
+          <hr />
+          <h3>or</h3>
+          <a href="/auth/google" className="login">LOG IN&nbsp;<img src="https://i.imgur.com/FHjYyi0.png" alt='google'/></a>
         </div>
         <p className="error-message">&nbsp;{this.state.error}</p>
       </div>
